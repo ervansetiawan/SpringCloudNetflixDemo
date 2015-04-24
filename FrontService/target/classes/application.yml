@@ -1,0 +1,31 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+    leaseRenewalIntervalInSeconds: 5
+
+spring:
+  application:
+    name: front-service
+
+server:
+  port: ${PORT:8081}
+
+
+zuul:
+  routes:
+    base64:
+      path: /base64/**
+      serviceId: back-service
+      stripPrefix: false
+
+    joke:
+      path: /joke/**
+      serviceId: chucknorris-service
+      stripPrefix: false
+
